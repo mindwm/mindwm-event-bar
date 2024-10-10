@@ -1,0 +1,16 @@
+(include "./buttons.yuck")
+(defwindow mindwm-bar
+           :monitor 0
+           :geometry (geometry :x "0px"
+                               :y "0px"
+                               :width "100%"
+                               :height "60px"
+                               :anchor "bottom left")
+           :stacking "fg"
+           :tooltip "defwindow"
+           :focusable true
+           :reserve (struts :distance "80px" :side "bottom")
+           :windowtype "dock"
+           :wm-ignore false
+(apps))
+

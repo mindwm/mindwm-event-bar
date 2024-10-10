@@ -1,0 +1,10 @@
+;; apps
+(defwidget apps [] 
+		(box :class "dockbox" 
+			(box :orientation "h" :spacing 3 :valign "center" :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false" :tooltip "dockbox"
+{% for event in events %}
+				(button :style "background-image: url('{{ event.icon }}');" :class "appicon" :onclick "{{ event.action }}")
+{% endfor %}
+    )
+  )
+)
