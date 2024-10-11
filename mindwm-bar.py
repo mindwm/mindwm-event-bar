@@ -6,6 +6,7 @@ import json
 import re
 from nats.aio.client import Client as NATS
 import base64
+import os
 
 events = []
 relationship_pattern = r"^org\.mindwm\.v1\.graph\.relationship\..*"
@@ -41,8 +42,8 @@ async def update_eww_config():
     shutil.copy(rendered_file_path, destination_file_path)
     print(f"Rendered content has been saved to {destination_file_path}") 
 
-NATS_SERVER = "nats://root:r00tpass@ubuntu-dev:4222"
-SUBJECT = "user-bebebeka.alice-host-broker-kne-trigger._knative"
+NATS_SERVER = os.getenv('NATS_SERVER')
+SUBJECT = os.getenv('SUBJECT')
 
 
 
