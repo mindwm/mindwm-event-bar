@@ -7,6 +7,7 @@ import re
 from nats.aio.client import Client as NATS
 import base64
 import os
+import subprocess
 
 events = []
 relationship_pattern = r"^org\.mindwm\.v1\.graph\.relationship\..*"
@@ -30,11 +31,12 @@ def event_icon(headers, event):
 
 async def update_eww_config():
     print("update_eww_config")
+    subprocess.run(['eww', '--config', subprocess.check_output('pwd').strip(), 'reload'])
 
     template_loader = FileSystemLoader(searchpath="./")
     env = Environment(loader=template_loader)
     template = env.get_template("buttons.jinja2")
-    output = template.render(events=events[-23:])
+    output = template.render(events=events[-20:])
     rendered_file_path = "_buttons.yuck"
     with open(rendered_file_path, "w") as rendered_file:
         rendered_file.write(output)
@@ -48,6 +50,7 @@ SUBJECT = os.getenv('SUBJECT')
 
 
 async def run():
+    await update_eww_config()
     # Create NATS client
     nc = NATS()
 
