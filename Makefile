@@ -34,3 +34,19 @@ run: build
 .PHONY = exec
 exec:
 		docker exec -ti $(CONTAINER_NAME) $(CONTAINER_SHELL)
+
+
+.ONESHELL: host_run
+host_run: #eww_host_restart
+	export NATS_SERVER=$(NATS_SERVER)
+	export SUBJECT=$(SUBJECT)
+	python3 -m venv .venv
+	. .venv/bin/activate
+	pip3 install -r ./requirements.txt
+	python3 ./mindwm-bar.py
+		
+
+eww_host_restart:
+	eww --config=`pwd` kill; \
+	eww --config=`pwd` daemon; \
+	eww --config=`pwd` open mindwm-bar
